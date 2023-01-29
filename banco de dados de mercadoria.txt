@@ -1,0 +1,84 @@
+﻿create table empresas(
+  id_empresa varchar(4) not null primary key,
+  nome_empresa varchar(50) not null,
+  cidade_empresa varchar(50) not null
+);
+
+create table fornecedores(
+  id_fornecedor varchar(4) not null primary key,
+  nome_fornecedor varchar(50) not null,
+  email_fornecedor varchar(50) not null,
+  fone_fornecedor varchar(9) not null
+);
+
+create table mercadorias(
+  id_mercadoria varchar(4) not null primary key,
+  nome_mercadoria varchar(50) not null,
+  segmento_mercadoria varchar(50) not null
+);
+
+create table representada(
+  id_fornecedor varchar(4) not null,
+  id_mercadoria varchar(4) not null,
+  id_empresa varchar(4) not null
+);
+
+insert into empresas value("0001", "Petrobras", "Porto Alegre");
+insert into empresas value("0002", "Somniac", "São Leopoldo");
+insert into empresas value("0003", "Sony", "Porto Alegre");
+insert into empresas value("0004", "Apple", "Esteio");
+insert into empresas value("0005", "Samsung", "Canoas");
+insert into empresas value("0006", "Xiaomi", "Esteio");
+insert into empresas value("0007", "Intel", "Porto Alegre");
+insert into empresas value("0008", "Positivo", "São Leopoldo");
+
+insert into fornecedores value("0001", "Jorge Pereira", "jorgexx@gmail.com", "998765432");
+insert into fornecedores value("0002","Eduardo Rodrigues", "eduardoxx@gmail.com", "998765431");
+
+insert into mercadorias value("0001", "Mouse sem fio", "TI");
+insert into mercadorias value("0002", "Teclado mecânico", "TI");
+insert into mercadorias value("0003", "Sofá", "Mobília");
+insert into mercadorias value("0004", "Geladeira", "eletrodoméstico");
+insert into mercadorias value("0005", "Liquidificador", "eletroméstico");
+
+insert into representada value("0001", "0004", "0002");
+insert into representada value("0001", "0005", "0002");
+insert into representada value("0002", "0004", "0002");
+insert into representada value("0002", "0005", "0002");
+insert into representada value("0002", "0001", "0003");
+insert into representada value("0002", "0002", "0003");
+insert into representada value("0002", "0001", "0004");
+insert into representada value("0002", "0002", "0004");
+insert into representada value("0002", "0001", "0005");
+insert into representada value("0002", "0002", "0005");
+insert into representada value("0001", "0003", "0006");
+insert into representada value("0001", "0004", "0007");
+insert into representada value("0001", "0001", "0007");
+insert into representada value("0001", "0003", "0008");
+insert into representada value("0001", "0005", "0008");
+
+-- consulta 1
+select nome_fornecedor, nome_empresa 
+from representada
+inner join fornecedores
+on fornecedores.id_fornecedor = representada.id_fornecedor
+inner join empresas
+on empresas.id_empresa = representada.id_empresa
+
+-- consulta 2
+select nome_fornecedor, nome_mercadoria, segmento_mercadoria 
+from representada
+inner join fornecedores
+on fornecedores.id_fornecedor = representada.id_fornecedor
+inner join mercadorias
+on mercadorias.id_mercadoria = representada.id_mercadoria
+
+-- consulta 3
+select nome_empresa, nome_fornecedor, nome_mercadoria, segmento_mercadoria
+from representada
+inner join fornecedores
+on fornecedores.id_fornecedor = representada.id_fornecedor
+inner join mercadorias
+on mercadorias.id_mercadoria = representada.id_mercadoria
+inner join empresas
+on empresas.id_empresa = representada.id_empresa
